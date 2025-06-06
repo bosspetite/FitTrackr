@@ -9,8 +9,13 @@ const activityRoutes = require('./routes/activity');
 const goalRoutes = require('./routes/goal');
 
 const app = express();
-
-app.use(cors());
+app.use ((cors(
+  {
+    origin: ["https://deploy-fit-trackr.vercel.app"],
+    method: ["POST", "GET"],
+    credentials: true
+  }
+  ));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);          // POST /api/auth/login, /api/auth/register
@@ -22,7 +27,7 @@ app.get('/', (req, res) => res.send('Fitness Tracker API'));
 
 const PORT = process.env.PORT || 5001;
 
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://micheal_king:Emma2005@cluster0.lqiwdlj.mongodb.net/FitTrackr?retryWrites=true&w=majority&appName=Cluster0');
   .then(() => {
     app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
   })
